@@ -1,0 +1,16 @@
+Х ѕодключить дополнительный репозиторий на выбор: Docker, Nginx, Oracle MySQL. ”становить любой пакет из этого репозитори€.
+sudo apt-add-repository -y ppa:nginx/stable
+sudo apt update
+sudo apt install nginx
+
+Х ”становить и удалить deb-пакет с помощью dpkg.
+sudo dpkg -i package.deb
+sudo dpkg -r package
+
+Х ”становить и удалить snap-пакет.
+sudo snap install package
+sudo snap remove package
+
+Х ƒобавить задачу дл€ выполнени€ каждые 3 минуты (создание директории, запись в файл).
+crontab -e
+*/3 * * * * mkdir -p /path/to/directory && echo "Hello, world!" > /path/to/directory/file.txt

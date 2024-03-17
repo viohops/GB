@@ -1,0 +1,40 @@
+#!/bin/bash
+
+# Путь к директории передается в качестве аргумента
+directory="$1"
+
+# Проверка наличия аргумента (пути к директории)
+if [[ -z "$directory" ]]; then
+  echo "Путь к директории не указан"
+  exit 1
+fi
+
+# Проверка существования указанной директории
+if [[ ! -d "$directory" ]]; then
+  echo "Директория не существует"
+  exit 1
+fi
+
+# Расширения файлов, которые нужно удалить
+file_extensions=("bak" "tmp" "backup")
+
+# Лог-файл
+log_file="cleanup_log.txt"
+
+# Очистка директории от файлов с указанными расширениями
+cleanup_directory() {
+  for ext in "${file_extensions[@]}"; do
+    find "$directory" -type f -name "*.$ext" -delete
+  done
+}
+
+# Опциональное логирование
+log() {
+  echo "$(date): $1" >> "$log_file"
+}
+
+# Очистка и логирование
+cleanup_directory
+log "Директория $directory успешно очищена от файлов с расширениями ${file_extensions[*]}"
+
+echo "Директория успешно очищена от файлов с расширениями ${file_extensions[*]}"

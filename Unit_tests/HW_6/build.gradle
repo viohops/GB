@@ -1,0 +1,53 @@
+plugins {
+    // Плагин для работы с Java
+    id 'java'
+
+    // Плагин для поддержки тестов с использованием JUnit
+    id 'org.junit.platform.gradle.plugin' version '3.0.0'
+}
+
+repositories {
+    // Maven Central Repository
+    mavenCentral()
+}
+
+dependencies {
+    // Зависимость для библиотеки JUnit Jupiter (тестовый фреймворк)
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+}
+
+test {
+    // Включаем использование JUnit 5 для выполнения тестов
+    useJUnitPlatform()
+}
+
+plugins {
+    id 'java'
+    id 'org.junit.platform.gradle.plugin' version '3.0.0'
+    id 'checkstyle'
+    id 'jacoco'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+checkstyle {
+    toolVersion = '8.45' // Укажите версию Checkstyle, если необходимо
+    configFile = rootProject.file('checkstyle.xml') // Путь к вашему файлу checkstyle.xml
+}
+
+jacoco {
+    toolVersion = '0.8.7' // Укажите версию JaCoCo, если необходимо
+    reportsDir = file("$buildDir/reports/jacoco")
+}

@@ -1,0 +1,49 @@
+• Установить Nginx или Apache и настроить его на работу с PHP-FPM.
+
+1. Установка Nginx:
+sudo apt update
+sudo apt install nginx
+
+2. Установка PHP-FPM:
+sudo apt install php-fpm
+
+3. Настройка Nginx для работы с PHP-FPM:
+В файле крнфигурации Nginx (/etc/nginx/sites-available/default) в текстовом редакторе
+location ~ \.php$ {
+    include snippets/fastcgi-php.conf;
+    fastcgi_pass unix:/run/php/php7.4-fpm.sock;
+}
+4. Перезапуск Nginx:
+sudo service nginx restart
+
+• Установить Apache. Настроить обработку PHP. Добиться одновременной работы с Nginx.
+
+1. Установка Apache:
+sudo apt update
+sudo apt install apache2
+
+2. Установка модуля PHP и настройка Apache для его использования:
+sudo apt install libapache2-mod-php
+sudo a2enmod php
+
+3. Настройка Nginx в качестве обратного прокси для Apache:
+В файле крнфигурации Nginx (/etc/nginx/sites-available/default) в текстовом редакторе:
+server {
+    listen 80;
+    server_name 10.110.140.108;
+
+    location / {
+        proxy_pass http://localhost:8080;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+    }
+}
+
+4. Перезапуск Nginx:
+sudo service nginx restart
+
+5. Настройка Apache для прослушивания порта 8080:
+Открыть файл конфигурации Apache (/etc/apache2/ports.conf) в текстовом редакторе и заменить строку Listen 80 на Listen 8080.
+
+6. Перезапуск Apache:
+sudo service apache2 restart
